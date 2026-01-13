@@ -4,325 +4,602 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toolvia - Your Daily Tools, All in One Place</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="description" content="Convert, calculate, compress, and simplify your everyday tasks — fast and free.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
     <style>
-        :root {
-            --primary-blue: #1a73e8;
-            --secondary-blue: #4285f4;
-            --light-blue: #e8f0fe;
-            --dark-blue: #0d47a1;
-            --text-dark: #202124;
-            --text-light: #5f6368;
-            --white: #ffffff;
-            --gray-light: #f8f9fa;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            --transition: all 0.3s ease;
-        }
-
+        /* CSS Reset and Base Styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        :root {
+            --primary-blue: #2563eb;
+            --primary-blue-dark: #1d4ed8;
+            --primary-blue-light: #3b82f6;
+            --light-blue: #eff6ff;
+            --light-gray: #f8fafc;
+            --medium-gray: #e2e8f0;
+            --dark-gray: #64748b;
+            --text-dark: #1e293b;
+            --text-light: #475569;
+            --white: #ffffff;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius: 10px;
+            --radius-sm: 6px;
+            --transition: all 0.3s ease;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
             color: var(--text-dark);
             background-color: var(--white);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        /* Header Styles */
-        header {
-            background-color: var(--white);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-blue-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary-blue);
+            color: var(--primary-blue);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-blue);
+            color: white;
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+        }
+
+        /* Header */
+        .header {
             position: sticky;
             top: 0;
-            z-index: 1000;
-            padding: 1rem 2rem;
+            z-index: 100;
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            padding: 1rem 5%;
         }
 
         .header-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
         .logo {
             font-size: 1.8rem;
-            font-weight: 700;
+            font-weight: 800;
             color: var(--primary-blue);
-            text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 8px;
         }
 
-        .nav-links {
+        .logo::before {
+            content: "🔧";
+            font-size: 1.5rem;
+        }
+
+        .nav {
             display: flex;
             gap: 2rem;
             align-items: center;
         }
 
-        .nav-links a {
-            text-decoration: none;
+        .nav-link {
+            font-weight: 600;
             color: var(--text-dark);
-            font-weight: 500;
             transition: var(--transition);
+            padding: 5px 0;
+            position: relative;
         }
 
-        .nav-links a:hover {
+        .nav-link:hover {
             color: var(--primary-blue);
         }
 
-        .contact-email {
-            background-color: var(--light-blue);
-            color: var(--primary-blue);
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            font-weight: 500;
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .contact-email:hover {
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
             background-color: var(--primary-blue);
-            color: var(--white);
+            transition: width 0.3s ease;
         }
 
-        .mobile-menu-btn {
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-email {
+            color: var(--primary-blue);
+            font-weight: 600;
+        }
+
+        .menu-toggle {
             display: none;
             background: none;
             border: none;
             font-size: 1.5rem;
-            color: var(--primary-blue);
             cursor: pointer;
+            color: var(--text-dark);
         }
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, #e3f2fd 0%, #f8f9fa 100%);
-            padding: 4rem 2rem;
+            padding: 5rem 5% 3rem;
+            background: linear-gradient(135deg, var(--light-blue) 0%, #ffffff 100%);
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        .hero-content {
+        .hero-container {
             max-width: 800px;
             margin: 0 auto;
+            position: relative;
+            z-index: 2;
         }
 
         .hero h1 {
-            font-size: 2.8rem;
-            margin-bottom: 1rem;
-            color: var(--dark-blue);
-            line-height: 1.2;
+            margin-bottom: 1.5rem;
         }
 
         .hero p {
             font-size: 1.2rem;
-            color: var(--text-light);
-            margin-bottom: 2rem;
-            max-width: 600px;
+            margin-bottom: 2.5rem;
+            max-width: 700px;
             margin-left: auto;
             margin-right: auto;
         }
 
-        .cta-button {
-            display: inline-block;
-            background-color: var(--primary-blue);
-            color: var(--white);
-            padding: 0.9rem 2.5rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: var(--transition);
-            box-shadow: var(--shadow);
-        }
-
-        .cta-button:hover {
-            background-color: var(--dark-blue);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-        }
-
-        .tools-illustration {
+        .hero-icons {
             display: flex;
             justify-content: center;
-            gap: 1.5rem;
-            margin-top: 3rem;
             flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 3rem;
+            margin-bottom: 2rem;
         }
 
-        .tool-icon {
-            background-color: var(--white);
+        .icon {
+            font-size: 2.5rem;
+            background: white;
             width: 70px;
             height: 70px;
-            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            border-radius: 50%;
             box-shadow: var(--shadow);
-            font-size: 1.8rem;
-            color: var(--primary-blue);
             transition: var(--transition);
         }
 
-        .tool-icon:hover {
+        .icon:hover {
             transform: translateY(-5px);
-            background-color: var(--light-blue);
+            box-shadow: var(--shadow-lg);
         }
 
-        /* Search Section */
-        .search-section {
-            padding: 2rem;
-            max-width: 800px;
+        /* AI Search Section */
+        .ai-search {
+            padding: 0 5% 4rem;
+            max-width: 900px;
             margin: 0 auto;
         }
 
         .search-container {
+            background-color: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            padding: 2rem;
+            margin-top: -2rem;
             position: relative;
-            margin-bottom: 2rem;
+            z-index: 10;
         }
 
-        .search-bar {
+        .search-title {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary-blue);
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-input {
             width: 100%;
-            padding: 1.2rem 1.5rem;
-            padding-left: 3.5rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
+            padding: 18px 20px 18px 50px;
+            border: 2px solid var(--medium-gray);
+            border-radius: var(--radius);
             font-size: 1.1rem;
             transition: var(--transition);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            background-color: var(--white);
         }
 
-        .search-bar:focus {
+        .search-input:focus {
             outline: none;
             border-color: var(--primary-blue);
-            box-shadow: 0 4px 12px rgba(26, 115, 232, 0.15);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
         .search-icon {
             position: absolute;
-            left: 1.2rem;
+            left: 20px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--text-light);
+            color: var(--dark-gray);
             font-size: 1.2rem;
         }
 
-        /* Tool Sections */
-        .tool-sections {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem 4rem;
+        .search-hint {
+            display: block;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--dark-gray);
+            margin-top: 10px;
         }
 
-        .section-title {
+        .search-results {
+            display: none;
+            background-color: var(--light-gray);
+            border-radius: var(--radius);
+            padding: 1rem;
+            margin-top: 1rem;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .search-result-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--medium-gray);
+            cursor: pointer;
+            transition: var(--transition);
+            border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
-            gap: 0.8rem;
-            margin: 3rem 0 1.5rem;
-            color: var(--dark-blue);
-            font-size: 1.8rem;
+            gap: 10px;
         }
 
-        .section-subtitle {
-            color: var(--text-light);
-            margin-bottom: 2rem;
-            font-size: 1.1rem;
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-result-item:hover {
+            background-color: var(--medium-gray);
+        }
+
+        .search-result-item.highlighted {
+            background-color: rgba(37, 99, 235, 0.1);
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        /* Tool Sections */
+        .tools-section {
+            padding: 4rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-description {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            text-align: center;
         }
 
         .tools-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 1.5rem;
-            margin-bottom: 1rem;
         }
 
         .tool-card {
             background-color: var(--white);
-            border-radius: 12px;
-            padding: 1.5rem;
+            border-radius: var(--radius);
             box-shadow: var(--shadow);
+            padding: 1.5rem;
             transition: var(--transition);
-            border: 1px solid #f1f1f1;
+            border: 1px solid var(--medium-gray);
             display: flex;
             flex-direction: column;
+            height: 100%;
         }
 
         .tool-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-blue-light);
         }
 
-        .tool-icon-small {
-            background-color: var(--light-blue);
-            width: 50px;
-            height: 50px;
-            border-radius: 10px;
+        .tool-card.highlighted {
+            animation: highlightPulse 2s ease-in-out;
+            border: 2px solid var(--primary-blue);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        }
+
+        .tool-card h3 {
+            margin-bottom: 0.8rem;
+            color: var(--text-dark);
+            font-size: 1.3rem;
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin-bottom: 1rem;
-            color: var(--primary-blue);
-            font-size: 1.3rem;
+            gap: 10px;
         }
 
-        .tool-name {
-            font-weight: 600;
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-            color: var(--text-dark);
+        .tool-icon {
+            font-size: 1.5rem;
         }
 
-        .tool-desc {
+        .tool-description {
             color: var(--text-light);
-            font-size: 0.95rem;
             margin-bottom: 1.5rem;
             flex-grow: 1;
         }
 
-        .use-tool-btn {
-            background-color: var(--light-blue);
-            color: var(--primary-blue);
+        .tool-card .btn {
+            align-self: flex-start;
+            margin-top: auto;
+        }
+
+        /* Enhanced AI Helper Panel with Chat */
+        .ai-helper {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .ai-helper-toggle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--primary-blue);
+            color: white;
             border: none;
-            padding: 0.7rem 1.2rem;
-            border-radius: 6px;
+            box-shadow: var(--shadow-lg);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .ai-helper-toggle:hover {
+            background-color: var(--primary-blue-dark);
+            transform: scale(1.1);
+        }
+
+        .ai-helper-panel {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 400px;
+            max-width: 90vw;
+            height: 500px;
+            max-height: 70vh;
+            background-color: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            display: none;
+            flex-direction: column;
+            border: 1px solid var(--medium-gray);
+            overflow: hidden;
+        }
+
+        .ai-helper-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid var(--medium-gray);
+            background-color: var(--primary-blue);
+            color: white;
+        }
+
+        .ai-helper-header h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .ai-helper-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: white;
+            line-height: 1;
+        }
+
+        .ai-chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .chat-message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+
+        .chat-message.ai {
+            align-self: flex-start;
+            background-color: var(--light-blue);
+            border-bottom-left-radius: 5px;
+        }
+
+        .chat-message.user {
+            align-self: flex-end;
+            background-color: var(--primary-blue);
+            color: white;
+            border-bottom-right-radius: 5px;
+        }
+
+        .chat-tool-suggestion {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            background-color: var(--white);
+            border: 1px solid var(--medium-gray);
+            border-radius: var(--radius-sm);
+            margin-top: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .chat-tool-suggestion:hover {
+            background-color: var(--light-blue);
+            border-color: var(--primary-blue-light);
+        }
+
+        .chat-input-container {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--medium-gray);
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex-grow: 1;
+            padding: 12px 16px;
+            border: 1px solid var(--medium-gray);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .chat-send-btn {
+            padding: 12px 20px;
+            background-color: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            width: fit-content;
         }
 
-        .use-tool-btn:hover {
-            background-color: var(--primary-blue);
-            color: var(--white);
-        }
-
-        .no-results {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 3rem;
-            color: var(--text-light);
-            font-size: 1.1rem;
-            display: none;
+        .chat-send-btn:hover {
+            background-color: var(--primary-blue-dark);
         }
 
         /* Footer */
-        footer {
-            background-color: var(--dark-blue);
-            color: var(--white);
-            padding: 3rem 2rem 2rem;
+        .footer {
+            background-color: var(--text-dark);
+            color: white;
+            padding: 3rem 5%;
         }
 
         .footer-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -331,28 +608,21 @@
 
         .footer-logo {
             font-size: 1.8rem;
-            font-weight: 700;
+            font-weight: 800;
             margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .footer-tagline {
-            color: #b3d4fc;
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
-        }
-
-        .footer-contact {
+            color: var(--medium-gray);
             margin-bottom: 1.5rem;
         }
 
-        .footer-contact a {
-            color: #b3d4fc;
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .footer-contact a:hover {
-            color: var(--white);
+        .footer-email {
+            color: var(--primary-blue-light);
+            font-weight: 600;
         }
 
         .footer-links {
@@ -361,416 +631,998 @@
             gap: 0.8rem;
         }
 
-        .footer-links a {
-            color: #b3d4fc;
-            text-decoration: none;
+        .footer-link {
+            color: var(--medium-gray);
             transition: var(--transition);
         }
 
-        .footer-links a:hover {
-            color: var(--white);
-            padding-left: 5px;
+        .footer-link:hover {
+            color: var(--primary-blue-light);
         }
 
-        .copyright {
+        .footer-bottom {
             text-align: center;
-            margin-top: 3rem;
             padding-top: 2rem;
+            margin-top: 2rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #b3d4fc;
+            color: var(--dark-gray);
             font-size: 0.9rem;
         }
 
         /* Responsive Design */
-        @media (max-width: 992px) {
-            .hero h1 {
-                font-size: 2.3rem;
-            }
-            
-            .tools-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            }
-        }
-
         @media (max-width: 768px) {
-            header {
-                padding: 1rem;
+            h1 {
+                font-size: 2rem;
             }
             
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
+            h2 {
+                font-size: 1.7rem;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav {
+                position: fixed;
+                top: 70px;
                 left: 0;
                 width: 100%;
                 background-color: var(--white);
                 flex-direction: column;
-                padding: 1.5rem;
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-                gap: 1.5rem;
+                align-items: flex-start;
+                padding: 2rem 5%;
+                box-shadow: var(--shadow);
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: var(--transition);
+                z-index: 99;
             }
             
-            .nav-links.active {
-                display: flex;
+            .nav.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
             }
             
-            .mobile-menu-btn {
-                display: block;
+            .nav-link {
+                padding: 0.8rem 0;
+                width: 100%;
+                border-bottom: 1px solid var(--light-gray);
             }
             
             .hero {
-                padding: 3rem 1rem;
-            }
-            
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .tool-sections {
-                padding: 0 1rem 3rem;
-            }
-            
-            .tools-illustration {
-                gap: 1rem;
-            }
-            
-            .tool-icon {
-                width: 60px;
-                height: 60px;
-                font-size: 1.5rem;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .hero h1 {
-                font-size: 1.8rem;
+                padding: 3rem 5% 2rem;
             }
             
             .tools-grid {
                 grid-template-columns: 1fr;
             }
             
-            .section-title {
-                font-size: 1.5rem;
+            .ai-helper {
+                bottom: 20px;
+                right: 20px;
             }
+            
+            .ai-helper-panel {
+                width: 350px;
+                right: -20px;
+            }
+            
+            .search-container {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .tools-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Animation classes */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes highlightPulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(37, 99, 235, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(37, 99, 235, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+        }
+
+        /* Section background alternation */
+        .tools-section:nth-child(even) {
+            background-color: var(--light-gray);
+        }
+
+        /* Loading animation for search */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--medium-gray);
+            border-radius: 50%;
+            border-top-color: var(--primary-blue);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main-content" class="sr-only">Skip to main content</a>
+
     <!-- Header -->
-    <header>
+    <header class="header">
         <div class="header-container">
-            <a href="index.html" class="logo">
-                <i class="fas fa-tools"></i>
-                Toolvia
-            </a>
+            <a href="#" class="logo">Toolvia</a>
             
-            <button class="mobile-menu-btn" id="mobileMenuBtn">
-                <i class="fas fa-bars"></i>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu">
+                ☰
             </button>
             
-            <div class="nav-links" id="navLinks">
-                <a href="index.html">Home</a>
-                <a href="#tools">Tools</a>
-                <a href="#contact">Contact</a>
-                <a href="mailto:toolvia@gmail.com" class="contact-email">
-                    <i class="fas fa-envelope"></i> toolvia@gmail.com
-                </a>
-            </div>
+            <nav class="nav" id="mainNav">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#tools" class="nav-link">Tools</a>
+                <a href="mailto:toolswonder1@gmail.com" class="nav-link nav-email">Contact</a>
+            </nav>
         </div>
     </header>
 
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
+    <section class="hero" id="home">
+        <div class="hero-container">
             <h1>Your Daily Tools, All in One Place</h1>
             <p>Convert, calculate, compress, and simplify your everyday tasks — fast and free.</p>
-            <a href="#tools" class="cta-button">Explore Tools</a>
+            <a href="#tools" class="btn">Explore Tools</a>
             
-            <div class="tools-illustration">
-                <div class="tool-icon"><i class="fas fa-image"></i></div>
-                <div class="tool-icon"><i class="fas fa-file-alt"></i></div>
-                <div class="tool-icon"><i class="fas fa-calculator"></i></div>
-                <div class="tool-icon"><i class="fas fa-code"></i></div>
-                <div class="tool-icon"><i class="fas fa-palette"></i></div>
-                <div class="tool-icon"><i class="fas fa-search"></i></div>
+            <div class="hero-icons">
+                <div class="icon">🖼️</div>
+                <div class="icon">📄</div>
+                <div class="icon">🧮</div>
+                <div class="icon">🔤</div>
+                <div class="icon">🌐</div>
+                <div class="icon">🎨</div>
             </div>
         </div>
     </section>
 
-    <!-- Search Section -->
-    <section class="search-section">
+    <!-- AI Search Section -->
+    <section class="ai-search" id="main-content">
         <div class="search-container">
-            <i class="fas fa-search search-icon"></i>
-            <input type="text" class="search-bar" id="searchBar" placeholder="Search a tool...">
+            <h3 class="search-title">AI Smart Search</h3>
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" id="searchInput" placeholder="Search a tool or describe your task…" aria-label="Search for tools">
+                <span class="search-hint">Try: "compress photo", "convert PDF to Word", "calculate BMI"</span>
+            </div>
+            <div class="search-results" id="searchResults"></div>
         </div>
-        <p id="searchResultsCount">Showing all tools</p>
     </section>
 
-    <!-- Tool Sections -->
-    <section class="tool-sections" id="tools">
-        <!-- All tool sections will be dynamically generated -->
-    </section>
+    <!-- Tools Sections -->
+    <main>
+        <!-- Image Tools -->
+        <section class="tools-section" id="tools">
+            <div class="section-header">
+                <h2>🖼 Image Tools</h2>
+                <p class="section-description">Powerful image processing tools for editing, converting, and optimizing your images.</p>
+            </div>
+            <div class="tools-grid" id="image-tools">
+                <!-- Tools will be populated by JavaScript -->
+            </div>
+        </section>
 
-    <!-- Footer -->
-    <footer id="contact">
-        <div class="footer-container">
-            <div class="footer-info">
-                <div class="footer-logo">Toolvia</div>
-                <p class="footer-tagline">Simplifying your digital life.</p>
-                <div class="footer-contact">
-                    <a href="mailto:toolvia@gmail.com"><i class="fas fa-envelope"></i> toolvia@gmail.com</a>
+        <!-- Document Tools -->
+        <section class="tools-section">
+            <div class="section-header">
+                <h2>📄 Document Tools</h2>
+                <p class="section-description">Handle PDFs and documents with conversion, compression, and editing tools.</p>
+            </div>
+            <div class="tools-grid" id="document-tools">
+                <!-- Tools will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Calculator Tools -->
+        <section class="tools-section">
+            <div class="section-header">
+                <h2>🧮 Calculator Tools</h2>
+                <p class="section-description">Advanced calculators for finance, health, science, and everyday calculations.</p>
+            </div>
+            <div class="tools-grid" id="calculator-tools">
+                <!-- Tools will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Text Tools -->
+        <section class="tools-section">
+            <div class="section-header">
+                <h2>🔤 Text Tools</h2>
+                <p class="section-description">Manipulate, analyze, and transform text with our comprehensive text tools.</p>
+            </div>
+            <div class="tools-grid" id="text-tools">
+                <!-- Tools will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Web/Developer Tools -->
+        <section class="tools-section">
+            <div class="section-header">
+                <h2>🌐 Web / Developer Tools</h2>
+                <p class="section-description">Essential tools for web developers and programmers.</p>
+            </div>
+            <div class="tools-grid" id="web-tools">
+                <!-- Tools will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Color Tools -->
+        <section class="tools-section">
+            <div class="section-header">
+                <h2>🎨 Color Tools</h2>
+                <p class="section-description">Color manipulation, conversion, and visualization tools for designers.</p>
+            </div>
+            <div class="tools-grid" id="color-tools">
+                <!-- Tools will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- SEO & Marketing Tools -->
+        <section class="tools-section">
+            <div class="section-header">
+                <h2>🌍 SEO & Marketing Tools</h2>
+                <p class="section-description">Optimize your content and analyze SEO performance with our marketing tools.</p>
+            </div>
+            <div class="tools-grid" id="seo-tools">
+                <!-- Tools will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Utility Tools -->
+        <section class="tools-section">
+            <div class="section-header">
+                <h2>🛠 Utility Tools</h2>
+                <p class="section-description">Practical tools for everyday tasks and productivity.</p>
+            </div>
+            <div class="tools-grid" id="utility-tools">
+                <!-- Tools will be populated by JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Enhanced AI Helper Panel with Chat -->
+    <div class="ai-helper">
+        <button class="ai-helper-toggle pulse" id="aiHelperToggle" aria-label="Open AI helper">
+            🤖
+        </button>
+        <div class="ai-helper-panel" id="aiHelperPanel">
+            <div class="ai-helper-header">
+                <h3>AI Assistant</h3>
+                <button class="ai-helper-close" id="aiHelperClose" aria-label="Close AI helper">×</button>
+            </div>
+            <div class="ai-chat-container">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="chat-message ai">
+                        Hello! I'm your AI assistant. I can help you find the right tool for your task. What would you like to do today?
+                    </div>
+                </div>
+                <div class="chat-input-container">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Type your task or question...">
+                    <button class="chat-send-btn" id="chatSendBtn">Send</button>
                 </div>
             </div>
-            
-            <div class="footer-links">
-                <a href="index.html">Home</a>
-                <a href="#tools">All Tools</a>
-                <a href="privacy-policy.html">Privacy Policy</a>
-                <a href="terms-of-use.html">Terms of Use</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div>
+                <div class="footer-logo">Toolvia</div>
+                <p class="footer-tagline">Simplifying your digital life.</p>
+                <a href="mailto:toolswonder1@gmail.com" class="footer-email">toolswonder1@gmail.com</a>
+            </div>
+            <div>
+                <h3>Quick Links</h3>
+                <div class="footer-links">
+                    <a href="#home" class="footer-link">Home</a>
+                    <a href="#tools" class="footer-link">All Tools</a>
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                    <a href="#" class="footer-link">Terms of Use</a>
+                </div>
             </div>
         </div>
-        
-        <div class="copyright">
-            &copy; 2023 Toolvia. All rights reserved.
+        <div class="footer-bottom">
+            <p>&copy; 2023 Toolvia. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
-        // Define all tools data with their respective URLs
-        const toolsData = [
+        // Tool icons mapping
+        const toolIcons = {
             // Image Tools
-            { category: "Image Tools", name: "Image Converter", desc: "Convert images between different formats", icon: "fas fa-exchange-alt", url: "image-converter.html" },
-            { category: "Image Tools", name: "Image Compressor", desc: "Reduce image file size without losing quality", icon: "fas fa-compress-alt", url: "image-compressor.html" },
-            { category: "Image Tools", name: "Image Resizer", desc: "Resize images to specific dimensions", icon: "fas fa-expand-alt", url: "image-resizer.html" },
-            { category: "Image Tools", name: "Image Cropper", desc: "Crop images to remove unwanted areas", icon: "fas fa-crop", url: "image-cropper.html" },
-            { category: "Image Tools", name: "Image to Text (OCR)", desc: "Extract text from images using OCR technology", icon: "fas fa-font", url: "image-to-text.html" },
-            { category: "Image Tools", name: "Image Rotator/Flipper", desc: "Rotate or flip images in any direction", icon: "fas fa-sync-alt", url: "image-rotator.html" },
+            "Image Converter": "🖼️",
+            "Image Compressor": "📦",
+            "Image Resizer": "↔️",
+            "Image Cropper": "✂️",
+            "Image to Text (OCR)": "🔤",
+            "Image Rotator / Flipper": "🔄",
             
             // Document Tools
-            { category: "Document Tools", name: "PDF to Word / Word to PDF", desc: "Convert between PDF and Word documents", icon: "fas fa-file-pdf", url: "pdf-word-converter.html" },
-            { category: "Document Tools", name: "PDF Compressor", desc: "Reduce PDF file size while preserving quality", icon: "fas fa-file-archive", url: "pdf-compressor.html" },
-            { category: "Document Tools", name: "PDF Merger & Splitter", desc: "Combine or split PDF files", icon: "fas fa-copy", url: "pdf-merger-splitter.html" },
-            { category: "Document Tools", name: "Document Converter", desc: "Convert between various document formats", icon: "fas fa-file-export", url: "document-converter.html" },
-            { category: "Document Tools", name: "PDF Lock/Unlock", desc: "Add or remove passwords from PDF files", icon: "fas fa-lock", url: "pdf-lock-unlock.html" },
-            { category: "Document Tools", name: "eSign PDF", desc: "Add electronic signatures to PDF documents", icon: "fas fa-signature", url: "esign-pdf.html" },
+            "PDF to Word / Word to PDF": "📄",
+            "PDF Compressor": "📦",
+            "PDF Merger & Splitter": "🧩",
+            "Document Converter": "🔄",
+            "PDF Lock / Unlock": "🔒",
+            "eSign PDF": "✍️",
             
             // Calculator Tools
-            { category: "Calculator Tools", name: "Scientific Calculator", desc: "Advanced calculator for complex calculations", icon: "fas fa-calculator", url: "scientific-calculator.html" },
-            { category: "Calculator Tools", name: "Age Calculator", desc: "Calculate age from birth date", icon: "fas fa-birthday-cake", url: "age-calculator.html" },
-            { category: "Calculator Tools", name: "BMI Calculator", desc: "Calculate Body Mass Index", icon: "fas fa-weight", url: "bmi-calculator.html" },
-            { category: "Calculator Tools", name: "Loan EMI Calculator", desc: "Calculate Equated Monthly Installments", icon: "fas fa-hand-holding-usd", url: "loan-emi-calculator.html" },
-            { category: "Calculator Tools", name: "GST Calculator", desc: "Calculate Goods and Services Tax", icon: "fas fa-percentage", url: "gst-calculator.html" },
-            { category: "Calculator Tools", name: "Currency Converter", desc: "Convert between world currencies", icon: "fas fa-money-bill-wave", url: "currency-converter.html" },
+            "Scientific Calculator": "🧮",
+            "Age Calculator": "🎂",
+            "BMI Calculator": "⚖️",
+            "Loan EMI Calculator": "💰",
+            "GST Calculator": "🧾",
+            "Currency Converter": "💱",
             
             // Text Tools
-            { category: "Text Tools", name: "Text Case Converter", desc: "Change text between different cases", icon: "fas fa-text-height", url: "text-case-converter.html" },
-            { category: "Text Tools", name: "Word & Character Counter", desc: "Count words and characters in text", icon: "fas fa-sort-amount-up", url: "word-character-counter.html" },
-            { category: "Text Tools", name: "Remove Duplicate Lines", desc: "Remove duplicate lines from text", icon: "fas fa-filter", url: "remove-duplicate-lines.html" },
-            { category: "Text Tools", name: "Text Sorter", desc: "Sort text lines alphabetically", icon: "fas fa-sort-alpha-down", url: "text-sorter.html" },
-            { category: "Text Tools", name: "Text Reverser", desc: "Reverse text or string order", icon: "fas fa-retweet", url: "text-reverser.html" },
-            { category: "Text Tools", name: "Text Encryptor/Decryptor", desc: "Encrypt and decrypt text securely", icon: "fas fa-key", url: "text-encryptor-decryptor.html" },
+            "Text Case Converter": "🔡",
+            "Word & Character Counter": "🔢",
+            "Remove Duplicate Lines": "🧹",
+            "Text Sorter": "📊",
+            "Text Reverser": "↩️",
+            "Text Encryptor / Decryptor": "🔐",
             
             // Web/Developer Tools
-            { category: "Web/Developer Tools", name: "HTML/CSS/JS Minifier", desc: "Minify code for web optimization", icon: "fas fa-code", url: "html-css-js-minifier.html" },
-            { category: "Web/Developer Tools", name: "JSON Formatter & Validator", desc: "Format and validate JSON data", icon: "fas fa-brackets-curly", url: "json-formatter-validator.html" },
-            { category: "Web/Developer Tools", name: "Base64 Encoder/Decoder", desc: "Encode and decode Base64 strings", icon: "fas fa-laptop-code", url: "base64-encoder-decoder.html" },
-            { category: "Web/Developer Tools", name: "URL Encoder/Decoder", desc: "Encode and decode URLs", icon: "fas fa-link", url: "url-encoder-decoder.html" },
-            { category: "Web/Developer Tools", name: "Color Picker & Converter", desc: "Pick colors and convert formats", icon: "fas fa-eye-dropper", url: "color-picker-converter.html" },
-            { category: "Web/Developer Tools", name: "Regex Tester", desc: "Test regular expressions", icon: "fas fa-terminal", url: "regex-tester.html" },
+            "HTML / CSS / JS Minifier": "📝",
+            "JSON Formatter & Validator": "{}",
+            "Base64 Encoder / Decoder": "🔢",
+            "URL Encoder / Decoder": "🔗",
+            "Color Picker & Converter": "🎨",
+            "Regex Tester": ".*",
             
             // Color Tools
-            { category: "Color Tools", name: "Color Picker from Image", desc: "Extract colors from images", icon: "fas fa-palette", url: "color-picker-from-image.html" },
-            { category: "Color Tools", name: "HEX to RGB Converter", desc: "Convert color codes between formats", icon: "fas fa-exchange-alt", url: "hex-to-rgb-converter.html" },
-            { category: "Color Tools", name: "Gradient Generator", desc: "Create beautiful CSS gradients", icon: "fas fa-fill-drip", url: "gradient-generator.html" },
-            { category: "Color Tools", name: "Contrast Checker", desc: "Check color contrast for accessibility", icon: "fas fa-adjust", url: "contrast-checker.html" },
-            { category: "Color Tools", name: "Palette Generator", desc: "Generate color palettes", icon: "fas fa-swatchbook", url: "palette-generator.html" },
-            { category: "Color Tools", name: "Color Blindness Simulator", desc: "Simulate color vision deficiencies", icon: "fas fa-eye", url: "color-blindness-simulator.html" },
+            "Color Picker from Image": "🖼️",
+            "HEX to RGB Converter": "🎨",
+            "Gradient Generator": "🌈",
+            "Contrast Checker": "👁️",
+            "Palette Generator": "🎨",
+            "Color Blindness Simulator": "👓",
             
             // SEO & Marketing Tools
-            { category: "SEO & Marketing Tools", name: "Keyword Density Checker", desc: "Analyze keyword density in text", icon: "fas fa-chart-bar", url: "keyword-density-checker.html" },
-            { category: "SEO & Marketing Tools", name: "Meta Tag Analyzer", desc: "Analyze meta tags of web pages", icon: "fas fa-tags", url: "meta-tag-analyzer.html" },
-            { category: "SEO & Marketing Tools", name: "Word Counter", desc: "Count words for content optimization", icon: "fas fa-search", url: "seo-word-counter.html" },
+            "Keyword Density Checker": "🔍",
+            "Meta Tag Analyzer": "🏷️",
+            "Word Counter": "📝",
             
             // Utility Tools
-            { category: "Utility Tools", name: "QR Code Generator & Scanner", desc: "Create and scan QR codes", icon: "fas fa-qrcode", url: "qr-code-generator.html" },
-            { category: "Utility Tools", name: "Barcode Generator", desc: "Generate barcodes", icon: "fas fa-barcode", url: "barcode-generator.html" },
-            { category: "Utility Tools", name: "UUID Generator", desc: "Generate unique identifiers", icon: "fas fa-fingerprint", url: "uuid-generator.html" },
-            { category: "Utility Tools", name: "Unit Converter", desc: "Convert between measurement units", icon: "fas fa-balance-scale", url: "unit-converter.html" },
-            { category: "Utility Tools", name: "Time Zone Converter", desc: "Convert between time zones", icon: "fas fa-clock", url: "time-zone-converter.html" },
-            { category: "Utility Tools", name: "Random Number/Password Generator", desc: "Generate random numbers and passwords", icon: "fas fa-random", url: "random-password-generator.html" }
-        ];
-
-        // Category metadata
-        const categories = {
-            "Image Tools": { icon: "🖼", subtitle: "Edit, convert, and optimize your images with our powerful image tools." },
-            "Document Tools": { icon: "📄", subtitle: "Handle PDFs and documents with ease using our document processing tools." },
-            "Calculator Tools": { icon: "🧮", subtitle: "Perform calculations for finance, health, and more with our calculators." },
-            "Text Tools": { icon: "🔤", subtitle: "Manipulate and analyze text with our collection of text processing tools." },
-            "Web/Developer Tools": { icon: "🌐", subtitle: "Tools for developers to format, validate, and optimize code." },
-            "Color Tools": { icon: "🎨", subtitle: "Work with colors, generate palettes, and check accessibility." },
-            "SEO & Marketing Tools": { icon: "💼", subtitle: "Optimize your content and analyze meta information for SEO." },
-            "Utility Tools": { icon: "🛠️", subtitle: "Handy tools for everyday tasks like generating codes and converting units." }
+            "QR Code Generator & Scanner": "📱",
+            "Barcode Generator": "📊",
+            "UUID Generator": "🆔",
+            "Unit Converter": "📏",
+            "Time Zone Converter": "🌐",
+            "Random Number / Password Generator": "🎲"
         };
 
-        // DOM elements
-        const toolSectionsContainer = document.querySelector('.tool-sections');
-        const searchBar = document.getElementById('searchBar');
-        const searchResultsCount = document.getElementById('searchResultsCount');
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const navLinks = document.getElementById('navLinks');
+        // All tools data
+        const toolsData = {
+            imageTools: [
+                { name: "Image Converter", desc: "Convert images between JPG, PNG, WebP, and more formats." },
+                { name: "Image Compressor", desc: "Reduce image file size without losing quality." },
+                { name: "Image Resizer", desc: "Resize images to specific dimensions while maintaining aspect ratio." },
+                { name: "Image Cropper", desc: "Crop images to remove unwanted areas or focus on specific parts." },
+                { name: "Image to Text (OCR)", desc: "Extract text from images using optical character recognition." },
+                { name: "Image Rotator / Flipper", desc: "Rotate or flip images horizontally or vertically." }
+            ],
+            documentTools: [
+                { name: "PDF to Word / Word to PDF", desc: "Convert PDF files to Word documents and vice versa." },
+                { name: "PDF Compressor", desc: "Reduce PDF file size for easier sharing and storage." },
+                { name: "PDF Merger & Splitter", desc: "Combine multiple PDFs or split large PDFs into smaller ones." },
+                { name: "Document Converter", desc: "Convert between various document formats like DOC, DOCX, TXT, etc." },
+                { name: "PDF Lock / Unlock", desc: "Add password protection to PDFs or remove it if you have the password." },
+                { name: "eSign PDF", desc: "Add electronic signatures to PDF documents securely." }
+            ],
+            calculatorTools: [
+                { name: "Scientific Calculator", desc: "Advanced calculator with scientific functions and graphing." },
+                { name: "Age Calculator", desc: "Calculate exact age in years, months, and days." },
+                { name: "BMI Calculator", desc: "Calculate Body Mass Index based on height and weight." },
+                { name: "Loan EMI Calculator", desc: "Calculate Equated Monthly Installment for loans." },
+                { name: "GST Calculator", desc: "Calculate Goods and Services Tax amounts." },
+                { name: "Currency Converter", desc: "Convert between world currencies with live exchange rates." }
+            ],
+            textTools: [
+                { name: "Text Case Converter", desc: "Change text case to uppercase, lowercase, title case, etc." },
+                { name: "Word & Character Counter", desc: "Count words, characters, sentences, and paragraphs." },
+                { name: "Remove Duplicate Lines", desc: "Remove duplicate lines from text while keeping unique ones." },
+                { name: "Text Sorter", desc: "Sort lines of text alphabetically or numerically." },
+                { name: "Text Reverser", desc: "Reverse text characters, words, or lines." },
+                { name: "Text Encryptor / Decryptor", desc: "Encrypt and decrypt text using various algorithms." }
+            ],
+            webTools: [
+                { name: "HTML / CSS / JS Minifier", desc: "Minify HTML, CSS, and JavaScript code for faster loading." },
+                { name: "JSON Formatter & Validator", desc: "Format and validate JSON data with syntax highlighting." },
+                { name: "Base64 Encoder / Decoder", desc: "Encode and decode data to/from Base64 format." },
+                { name: "URL Encoder / Decoder", desc: "Encode and decode URL components for safe transmission." },
+                { name: "Color Picker & Converter", desc: "Pick colors and convert between HEX, RGB, HSL, etc." },
+                { name: "Regex Tester", desc: "Test regular expressions with live matching and highlighting." }
+            ],
+            colorTools: [
+                { name: "Color Picker from Image", desc: "Extract colors from uploaded images." },
+                { name: "HEX to RGB Converter", desc: "Convert HEX color codes to RGB values and vice versa." },
+                { name: "Gradient Generator", desc: "Create beautiful CSS gradients with custom colors." },
+                { name: "Contrast Checker", desc: "Check color contrast ratios for accessibility compliance." },
+                { name: "Palette Generator", desc: "Generate harmonious color palettes for your projects." },
+                { name: "Color Blindness Simulator", desc: "Simulate how colors appear to people with color blindness." }
+            ],
+            seoTools: [
+                { name: "Keyword Density Checker", desc: "Analyze keyword density and frequency in text." },
+                { name: "Meta Tag Analyzer", desc: "Check and analyze meta tags for SEO optimization." },
+                { name: "Word Counter", desc: "Count words, characters, and reading time for content." }
+            ],
+            utilityTools: [
+                { name: "QR Code Generator & Scanner", desc: "Create QR codes and scan them with your camera." },
+                { name: "Barcode Generator", desc: "Generate barcodes in various formats for products." },
+                { name: "UUID Generator", desc: "Generate unique identifiers for databases and applications." },
+                { name: "Unit Converter", desc: "Convert between different units of measurement." },
+                { name: "Time Zone Converter", desc: "Convert time between different time zones worldwide." },
+                { name: "Random Number / Password Generator", desc: "Generate secure random numbers and passwords." }
+            ]
+        };
 
-        // Initialize the page with all tools
-        function initializePage() {
-            renderToolSections(toolsData);
+        // AI Search Intent Mapping
+        const searchIntents = {
+            "compress": ["Image Compressor", "PDF Compressor", "File Compressor"],
+            "photo": ["Image Compressor", "Image Resizer", "Image Cropper", "Image Converter"],
+            "image": ["Image Compressor", "Image Resizer", "Image Cropper", "Image Converter", "Image to Text (OCR)"],
+            "pdf": ["PDF to Word / Word to PDF", "PDF Compressor", "PDF Merger & Splitter", "PDF Lock / Unlock", "eSign PDF"],
+            "convert": ["Image Converter", "PDF to Word / Word to PDF", "Document Converter", "Currency Converter", "Unit Converter"],
+            "calculate": ["Scientific Calculator", "Age Calculator", "BMI Calculator", "Loan EMI Calculator", "GST Calculator"],
+            "bmi": ["BMI Calculator"],
+            "loan": ["Loan EMI Calculator"],
+            "currency": ["Currency Converter"],
+            "text": ["Text Case Converter", "Word & Character Counter", "Remove Duplicate Lines", "Text Sorter", "Text Reverser"],
+            "count": ["Word & Character Counter"],
+            "encrypt": ["Text Encryptor / Decryptor"],
+            "html": ["HTML / CSS / JS Minifier"],
+            "css": ["HTML / CSS / JS Minifier"],
+            "javascript": ["HTML / CSS / JS Minifier"],
+            "json": ["JSON Formatter & Validator"],
+            "url": ["URL Encoder / Decoder"],
+            "color": ["Color Picker & Converter", "Color Picker from Image", "HEX to RGB Converter", "Gradient Generator"],
+            "gradient": ["Gradient Generator"],
+            "seo": ["Keyword Density Checker", "Meta Tag Analyzer", "Word Counter"],
+            "keyword": ["Keyword Density Checker"],
+            "meta": ["Meta Tag Analyzer"],
+            "qr": ["QR Code Generator & Scanner"],
+            "barcode": ["Barcode Generator"],
+            "uuid": ["UUID Generator"],
+            "unit": ["Unit Converter"],
+            "time": ["Time Zone Converter"],
+            "password": ["Random Number / Password Generator"],
+            "random": ["Random Number / Password Generator"]
+        };
+
+        // AI Responses
+        const aiResponses = {
+            greetings: ["Hello! How can I help you today?", "Hi there! What tool are you looking for?", "Welcome! What task would you like to accomplish?"],
+            help: ["I can help you find the perfect tool for your task. Just describe what you want to do.", "Tell me what you need and I'll suggest the right tool for you."],
+            toolSuggestions: ["Based on your request, I recommend these tools:", "Here are some tools that might help you:", "For that task, you might want to try:"],
+            noMatch: ["I'm not sure I understand. Could you describe your task differently?", "I don't have a tool for that specific task yet. Try searching for something similar."],
+            thanks: ["You're welcome! Let me know if you need anything else.", "Happy to help! Feel free to ask if you need more assistance."]
+        };
+
+        // DOM Elements
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+        const aiHelperToggle = document.getElementById('aiHelperToggle');
+        const aiHelperPanel = document.getElementById('aiHelperPanel');
+        const aiHelperClose = document.getElementById('aiHelperClose');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const chatSendBtn = document.getElementById('chatSendBtn');
+        const menuToggle = document.getElementById('menuToggle');
+        const mainNav = document.getElementById('mainNav');
+
+        // Chat history
+        let chatHistory = [];
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Populate all tool sections with icons
+            populateToolSections();
+            
+            // Set up event listeners
+            setupEventListeners();
+            
+            // Add fade-in animation to sections
+            animateSectionsOnScroll();
+            
+            // Add initial AI message
+            addAIMessage(aiResponses.greetings[0]);
+        });
+
+        // Populate tool sections with cards including icons
+        function populateToolSections() {
+            for (const [sectionId, tools] of Object.entries(toolsData)) {
+                const container = document.getElementById(sectionId.replace('Tools', '-tools').toLowerCase());
+                if (!container) continue;
+                
+                tools.forEach(tool => {
+                    const toolCard = document.createElement('div');
+                    toolCard.className = 'tool-card fade-in';
+                    toolCard.setAttribute('data-tool-name', tool.name.toLowerCase());
+                    toolCard.innerHTML = `
+                        <h3><span class="tool-icon">${toolIcons[tool.name] || "🔧"}</span> ${tool.name}</h3>
+                        <p class="tool-description">${tool.desc}</p>
+                        <button class="btn btn-small use-tool-btn" data-tool="${tool.name}">Use Tool</button>
+                    `;
+                    container.appendChild(toolCard);
+                });
+            }
+            
+            // Add event listeners to "Use Tool" buttons
+            document.querySelectorAll('.use-tool-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const toolName = this.getAttribute('data-tool');
+                    showToolModal(toolName);
+                });
+            });
         }
 
-        // Render tool sections
-        function renderToolSections(tools) {
-            toolSectionsContainer.innerHTML = '';
-            
-            // Group tools by category
-            const toolsByCategory = tools.reduce((acc, tool) => {
-                if (!acc[tool.category]) {
-                    acc[tool.category] = [];
-                }
-                acc[tool.category].push(tool);
-                return acc;
-            }, {});
-            
-            // Render each category
-            Object.keys(categories).forEach(categoryName => {
-                const categoryTools = toolsByCategory[categoryName] || [];
-                
-                // Skip empty categories
-                if (categoryTools.length === 0) return;
-                
-                const categorySection = document.createElement('div');
-                categorySection.className = 'tool-category';
-                categorySection.innerHTML = `
-                    <h2 class="section-title">${categories[categoryName].icon} ${categoryName}</h2>
-                    <p class="section-subtitle">${categories[categoryName].subtitle}</p>
-                    <div class="tools-grid" id="${categoryName.replace(/\s+/g, '-')}-grid">
-                        ${categoryTools.map(tool => `
-                            <div class="tool-card" data-tool-name="${tool.name.toLowerCase()}">
-                                <div class="tool-icon-small">
-                                    <i class="${tool.icon}"></i>
-                                </div>
-                                <h3 class="tool-name">${tool.name}</h3>
-                                <p class="tool-desc">${tool.desc}</p>
-                                <a href="${tool.url}" class="use-tool-btn">Use Tool</a>
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
-                
-                toolSectionsContainer.appendChild(categorySection);
+        // Set up event listeners
+        function setupEventListeners() {
+            // Search functionality
+            searchInput.addEventListener('input', function() {
+                performSearch(this.value);
             });
             
-            // Add no results message
-            const noResults = document.createElement('div');
-            noResults.className = 'no-results';
-            noResults.id = 'noResults';
-            noResults.innerHTML = `
-                <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
-                <h3>No tools found</h3>
-                <p>Try searching with different keywords</p>
-            `;
-            toolSectionsContainer.appendChild(noResults);
+            searchInput.addEventListener('focus', function() {
+                if (this.value.trim() !== '') {
+                    performSearch(this.value);
+                }
+            });
             
-            updateSearchResultsCount(tools.length);
+            // AI helper toggle
+            aiHelperToggle.addEventListener('click', function() {
+                aiHelperPanel.style.display = 'flex';
+                this.classList.remove('pulse');
+                chatInput.focus();
+            });
+            
+            aiHelperClose.addEventListener('click', function() {
+                aiHelperPanel.style.display = 'none';
+            });
+            
+            // Close AI helper when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!aiHelperPanel.contains(event.target) && 
+                    !aiHelperToggle.contains(event.target) && 
+                    aiHelperPanel.style.display === 'flex') {
+                    aiHelperPanel.style.display = 'none';
+                }
+            });
+            
+            // Chat functionality
+            chatSendBtn.addEventListener('click', sendChatMessage);
+            chatInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendChatMessage();
+                }
+            });
+            
+            // Mobile menu toggle
+            menuToggle.addEventListener('click', function() {
+                mainNav.classList.toggle('active');
+                this.textContent = mainNav.classList.contains('active') ? '✕' : '☰';
+            });
+            
+            // Close mobile menu when clicking a link
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function() {
+                    mainNav.classList.remove('active');
+                    menuToggle.textContent = '☰';
+                });
+            });
+            
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        e.preventDefault();
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
         }
 
-        // Filter tools based on search query
-        function filterTools(query) {
-            const normalizedQuery = query.toLowerCase().trim();
+        // Send chat message
+        function sendChatMessage() {
+            const message = chatInput.value.trim();
+            if (!message) return;
             
-            if (normalizedQuery === '') {
-                renderToolSections(toolsData);
+            // Add user message to chat
+            addUserMessage(message);
+            
+            // Clear input
+            chatInput.value = '';
+            
+            // Process AI response
+            setTimeout(() => {
+                processAIChatResponse(message);
+            }, 500);
+        }
+
+        // Add user message to chat
+        function addUserMessage(message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'chat-message user';
+            messageDiv.textContent = message;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            // Save to history
+            chatHistory.push({ role: 'user', content: message });
+        }
+
+        // Add AI message to chat
+        function addAIMessage(message, toolSuggestions = null) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'chat-message ai';
+            
+            if (toolSuggestions) {
+                messageDiv.innerHTML = `<p>${message}</p>`;
+                
+                // Add tool suggestions
+                toolSuggestions.forEach(tool => {
+                    const suggestionDiv = document.createElement('div');
+                    suggestionDiv.className = 'chat-tool-suggestion';
+                    suggestionDiv.innerHTML = `
+                        <span class="tool-icon">${toolIcons[tool.name] || "🔧"}</span>
+                        <div>
+                            <strong>${tool.name}</strong>
+                            <p style="font-size: 0.9rem; margin-top: 3px; color: var(--text-light);">${tool.desc}</p>
+                        </div>
+                    `;
+                    
+                    suggestionDiv.addEventListener('click', function() {
+                        scrollToToolAndHighlight(tool.name);
+                        addUserMessage(`I want to use ${tool.name}`);
+                        addAIMessage(`Opening ${tool.name} for you...`);
+                    });
+                    
+                    messageDiv.appendChild(suggestionDiv);
+                });
+            } else {
+                messageDiv.textContent = message;
+            }
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            // Save to history
+            chatHistory.push({ role: 'ai', content: message });
+        }
+
+        // Process AI chat response
+        function processAIChatResponse(userMessage) {
+            const lowerMessage = userMessage.toLowerCase();
+            
+            // Check for greetings
+            if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
+                const randomGreeting = aiResponses.greetings[Math.floor(Math.random() * aiResponses.greetings.length)];
+                addAIMessage(randomGreeting);
                 return;
             }
             
-            const filteredTools = toolsData.filter(tool => 
-                tool.name.toLowerCase().includes(normalizedQuery) ||
-                tool.desc.toLowerCase().includes(normalizedQuery) ||
-                tool.category.toLowerCase().includes(normalizedQuery)
-            );
-            
-            renderToolSections(filteredTools);
-            
-            // Show/hide no results message
-            const noResults = document.getElementById('noResults');
-            if (filteredTools.length === 0) {
-                noResults.style.display = 'block';
-            } else {
-                noResults.style.display = 'none';
+            // Check for thanks
+            if (lowerMessage.includes('thank')) {
+                const randomThanks = aiResponses.thanks[Math.floor(Math.random() * aiResponses.thanks.length)];
+                addAIMessage(randomThanks);
+                return;
             }
             
-            updateSearchResultsCount(filteredTools.length);
-        }
-
-        // Update search results count
-        function updateSearchResultsCount(count) {
-            if (count === toolsData.length) {
-                searchResultsCount.textContent = 'Showing all tools';
-            } else {
-                searchResultsCount.textContent = `Found ${count} tool${count !== 1 ? 's' : ''}`;
+            // Check for help request
+            if (lowerMessage.includes('help')) {
+                const randomHelp = aiResponses.help[Math.floor(Math.random() * aiResponses.help.length)];
+                addAIMessage(randomHelp);
+                return;
             }
-        }
-
-        // Mobile menu toggle
-        function toggleMobileMenu() {
-            navLinks.classList.toggle('active');
-            const icon = mobileMenuBtn.querySelector('i');
-            if (navLinks.classList.contains('active')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
+            
+            // Find matching tools
+            const matchedTools = findToolsByQuery(userMessage);
+            
+            if (matchedTools.length > 0) {
+                // Show tool suggestions
+                const randomSuggestion = aiResponses.toolSuggestions[Math.floor(Math.random() * aiResponses.toolSuggestions.length)];
+                addAIMessage(randomSuggestion, matchedTools.slice(0, 3));
             } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
+                // No match found
+                const randomNoMatch = aiResponses.noMatch[Math.floor(Math.random() * aiResponses.noMatch.length)];
+                addAIMessage(randomNoMatch);
             }
         }
 
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (event) => {
-            if (navLinks.classList.contains('active') && 
-                !navLinks.contains(event.target) && 
-                !mobileMenuBtn.contains(event.target)) {
-                toggleMobileMenu();
-            }
-        });
-
-        // Event listeners
-        searchBar.addEventListener('input', (e) => {
-            filterTools(e.target.value);
-        });
-
-        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
-
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    // Close mobile menu if open
-                    if (navLinks.classList.contains('active')) {
-                        toggleMobileMenu();
-                    }
-                    
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
+        // Find tools by query
+        function findToolsByQuery(query) {
+            const lowerQuery = query.toLowerCase();
+            let matchedTools = [];
+            
+            // Check for exact tool name matches
+            Object.values(toolsData).flat().forEach(tool => {
+                if (tool.name.toLowerCase().includes(lowerQuery)) {
+                    matchedTools.push({...tool, matchType: 'name'});
+                }
+            });
+            
+            // Check for intent matches
+            Object.entries(searchIntents).forEach(([keyword, toolNames]) => {
+                if (lowerQuery.includes(keyword)) {
+                    toolNames.forEach(toolName => {
+                        // Find the tool object
+                        Object.values(toolsData).flat().forEach(tool => {
+                            if (tool.name === toolName && !matchedTools.some(t => t.name === toolName)) {
+                                matchedTools.push({...tool, matchType: 'intent'});
+                            }
+                        });
                     });
                 }
             });
-        });
+            
+            // Check for description matches (if no other matches found)
+            if (matchedTools.length === 0) {
+                Object.values(toolsData).flat().forEach(tool => {
+                    if (tool.desc.toLowerCase().includes(lowerQuery)) {
+                        matchedTools.push({...tool, matchType: 'description'});
+                    }
+                });
+            }
+            
+            return matchedTools;
+        }
 
-        // Initialize the page
-        initializePage();
+        // Perform search with AI-like intent matching
+        function performSearch(query) {
+            const trimmedQuery = query.trim().toLowerCase();
+            
+            if (trimmedQuery === '') {
+                searchResults.style.display = 'none';
+                return;
+            }
+            
+            // Show loading state
+            searchResults.innerHTML = '<div style="text-align: center; padding: 20px;"><div class="loading"></div><p>Searching tools...</p></div>';
+            searchResults.style.display = 'block';
+            
+            // Simulate AI processing delay
+            setTimeout(() => {
+                const matchedTools = findToolsByQuery(query);
+                
+                // Display results
+                displaySearchResults(matchedTools, trimmedQuery);
+            }, 300);
+        }
+
+        // Display search results
+        function displaySearchResults(tools, query) {
+            if (tools.length === 0) {
+                searchResults.innerHTML = `
+                    <div class="search-result-item">
+                        <p>No tools found for "${query}".</p>
+                        <p style="font-size: 0.9rem; margin-top: 5px;">Try: "compress photo", "convert PDF", "calculate BMI"</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Limit to 10 results
+            const limitedTools = tools.slice(0, 10);
+            
+            searchResults.innerHTML = '';
+            
+            limitedTools.forEach((tool, index) => {
+                const resultItem = document.createElement('div');
+                resultItem.className = 'search-result-item';
+                if (index === 0) resultItem.classList.add('highlighted');
+                
+                resultItem.innerHTML = `
+                    <span class="tool-icon">${toolIcons[tool.name] || "🔧"}</span>
+                    <div>
+                        <h4 style="margin-bottom: 5px;">${tool.name}</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-light);">${tool.desc}</p>
+                        <span style="font-size: 0.8rem; color: var(--primary-blue); margin-top: 5px; display: block;">
+                            ${tool.matchType === 'name' ? '🔍 Name match' : tool.matchType === 'intent' ? '🤖 AI intent match' : '📝 Description match'}
+                        </span>
+                    </div>
+                `;
+                
+                resultItem.addEventListener('click', function() {
+                    scrollToToolAndHighlight(tool.name);
+                    searchResults.style.display = 'none';
+                    searchInput.value = '';
+                });
+                
+                searchResults.appendChild(resultItem);
+            });
+            
+            // Add keyboard navigation
+            addSearchKeyboardNavigation();
+        }
+
+        // Scroll to tool and highlight it
+        function scrollToToolAndHighlight(toolName) {
+            // Find the tool card
+            const toolCards = document.querySelectorAll('.tool-card');
+            let targetCard = null;
+            let targetSection = null;
+            
+            toolCards.forEach(card => {
+                if (card.getAttribute('data-tool-name') === toolName.toLowerCase()) {
+                    targetCard = card;
+                    targetSection = card.closest('.tools-section');
+                }
+            });
+            
+            if (targetCard && targetSection) {
+                // Scroll to the section
+                window.scrollTo({
+                    top: targetSection.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+                
+                // Highlight the card
+                targetCard.classList.add('highlighted');
+                
+                // Remove highlight after 3 seconds
+                setTimeout(() => {
+                    targetCard.classList.remove('highlighted');
+                }, 3000);
+                
+                // Add a message in the chat if it's open
+                if (aiHelperPanel.style.display === 'flex') {
+                    addAIMessage(`I've highlighted the ${toolName} tool for you.`);
+                }
+            }
+        }
+
+        // Add keyboard navigation for search results
+        function addSearchKeyboardNavigation() {
+            const results = searchResults.querySelectorAll('.search-result-item');
+            let currentIndex = -1;
+            
+            searchInput.addEventListener('keydown', function(e) {
+                if (results.length === 0) return;
+                
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    currentIndex = Math.min(currentIndex + 1, results.length - 1);
+                    updateHighlightedResult();
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    currentIndex = Math.max(currentIndex - 1, -1);
+                    updateHighlightedResult();
+                } else if (e.key === 'Enter' && currentIndex >= 0) {
+                    e.preventDefault();
+                    results[currentIndex].click();
+                }
+                
+                function updateHighlightedResult() {
+                    results.forEach((item, index) => {
+                        item.classList.toggle('highlighted', index === currentIndex);
+                    });
+                    
+                    // Scroll into view if needed
+                    if (currentIndex >= 0) {
+                        results[currentIndex].scrollIntoView({block: 'nearest'});
+                    }
+                }
+            });
+        }
+
+        // Show tool modal (simulated)
+        function showToolModal(toolName) {
+            // In a real implementation, this would open the actual tool
+            // For this demo, we'll show a notification
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: white;
+                padding: 2rem;
+                border-radius: var(--radius);
+                box-shadow: var(--shadow-lg);
+                z-index: 2000;
+                max-width: 90%;
+                width: 400px;
+                text-align: center;
+            `;
+            
+            modal.innerHTML = `
+                <h3>${toolIcons[toolName] || "🔧"} ${toolName}</h3>
+                <p>This tool would open in a real implementation.</p>
+                <p style="font-size: 0.9rem; margin: 1rem 0; color: var(--dark-gray);">
+                    For demo purposes, this is a simulation. In the full version, you would be able to use this tool directly.
+                </p>
+                <div style="display: flex; gap: 10px; justify-content: center; margin-top: 1.5rem;">
+                    <button id="closeModal" class="btn btn-small">Close</button>
+                    <button class="btn btn-small btn-outline">Learn More</button>
+                </div>
+            `;
+            
+            // Add overlay
+            const overlay = document.createElement('div');
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 1999;
+            `;
+            
+            document.body.appendChild(overlay);
+            document.body.appendChild(modal);
+            
+            // Close modal functionality
+            document.getElementById('closeModal').addEventListener('click', function() {
+                document.body.removeChild(modal);
+                document.body.removeChild(overlay);
+            });
+            
+            overlay.addEventListener('click', function() {
+                document.body.removeChild(modal);
+                document.body.removeChild(overlay);
+            });
+        }
+
+        // Animate sections on scroll
+        function animateSectionsOnScroll() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe all tool sections and cards
+            document.querySelectorAll('.tools-section, .tool-card').forEach(el => {
+                observer.observe(el);
+            });
+        }
     </script>
 </body>
-</html>
+                </html>
