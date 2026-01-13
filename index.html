@@ -948,8 +948,8 @@
                 <div class="footer-links">
                     <a href="#home" class="footer-link">Home</a>
                     <a href="#tools" class="footer-link">All Tools</a>
-                    <a href="privacy-policy.html" class="footer-link">Privacy Policy</a>
-                    <a href="terms-of-use.html" class="footer-link">Terms of Use</a>
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                    <a href="#" class="footer-link">Terms of Use</a>
                 </div>
             </div>
         </div>
@@ -1015,12 +1015,12 @@
             "SEO Word Counter": "📝",
             
             // Utility Tools
-            "QR Code Generator & Scanner": "📱",
+            "QR Code Generator": "📱",
             "Barcode Generator": "📊",
             "UUID Generator": "🆔",
             "Unit Converter": "📏",
             "Time Zone Converter": "🌐",
-            "Random Number / Password Generator": "🎲"
+            "Random Password Generator": "🎲"
         };
 
         // All tools data with working links
@@ -1079,18 +1079,18 @@
                 { name: "SEO Word Counter", desc: "Count words, characters, and reading time for content.", link: "seo-word-counter.html" }
             ],
             utilityTools: [
-                { name: "QR Code Generator & Scanner", desc: "Create QR codes and scan them with your camera.", link: "qr-code-generator.html" },
+                { name: "QR Code Generator", desc: "Create QR codes and scan them with your camera.", link: "qr-code-generator.html" },
                 { name: "Barcode Generator", desc: "Generate barcodes in various formats for products.", link: "barcode-generator.html" },
                 { name: "UUID Generator", desc: "Generate unique identifiers for databases and applications.", link: "uuid-generator.html" },
                 { name: "Unit Converter", desc: "Convert between different units of measurement.", link: "unit-converter.html" },
                 { name: "Time Zone Converter", desc: "Convert time between different time zones worldwide.", link: "time-zone-converter.html" },
-                { name: "Random Number / Password Generator", desc: "Generate secure random numbers and passwords.", link: "random-password-generator.html" }
+                { name: "Random Password Generator", desc: "Generate secure random numbers and passwords.", link: "random-password-generator.html" }
             ]
         };
 
         // AI Search Intent Mapping
         const searchIntents = {
-            "compress": ["Image Compressor", "PDF Compressor"],
+            "compress": ["Image Compressor", "PDF Compressor", "File Compressor"],
             "photo": ["Image Compressor", "Image Resizer", "Image Cropper", "Image Converter"],
             "image": ["Image Compressor", "Image Resizer", "Image Cropper", "Image Converter", "Image to Text (OCR)"],
             "pdf": ["PDF to Word / Word to PDF", "PDF Compressor", "PDF Merger & Splitter", "PDF Lock / Unlock", "eSign PDF"],
@@ -1100,7 +1100,7 @@
             "loan": ["Loan EMI Calculator"],
             "currency": ["Currency Converter"],
             "text": ["Text Case Converter", "Word & Character Counter", "Remove Duplicate Lines", "Text Sorter", "Text Reverser"],
-            "count": ["Word & Character Counter"],
+            "count": ["Word & Character Counter", "SEO Word Counter"],
             "encrypt": ["Text Encryptor / Decryptor"],
             "html": ["HTML / CSS / JS Minifier"],
             "css": ["HTML / CSS / JS Minifier"],
@@ -1112,13 +1112,13 @@
             "seo": ["Keyword Density Checker", "Meta Tag Analyzer", "SEO Word Counter"],
             "keyword": ["Keyword Density Checker"],
             "meta": ["Meta Tag Analyzer"],
-            "qr": ["QR Code Generator & Scanner"],
+            "qr": ["QR Code Generator"],
             "barcode": ["Barcode Generator"],
             "uuid": ["UUID Generator"],
             "unit": ["Unit Converter"],
             "time": ["Time Zone Converter"],
-            "password": ["Random Number / Password Generator"],
-            "random": ["Random Number / Password Generator"]
+            "password": ["Random Password Generator"],
+            "random": ["Random Password Generator"]
         };
 
         // AI Responses
@@ -1303,8 +1303,9 @@
                     `;
                     
                     suggestionDiv.addEventListener('click', function() {
-                        // Navigate directly to the tool
-                        window.location.href = tool.link;
+                        scrollToToolAndHighlight(tool.name);
+                        addUserMessage(`I want to use ${tool.name}`);
+                        addAIMessage(`Perfect! Click the "Use Tool" button on the ${tool.name} card to access it.`);
                     });
                     
                     messageDiv.appendChild(suggestionDiv);
@@ -1367,7 +1368,7 @@
             // Check for exact tool name matches
             Object.values(toolsData).flat().forEach(tool => {
                 if (tool.name.toLowerCase().includes(lowerQuery)) {
-                    matchedTools.push(tool);
+                    matchedTools.push({...tool, matchType: 'name'});
                 }
             });
             
@@ -1378,7 +1379,7 @@
                         // Find the tool object
                         Object.values(toolsData).flat().forEach(tool => {
                             if (tool.name === toolName && !matchedTools.some(t => t.name === toolName)) {
-                                matchedTools.push(tool);
+                                matchedTools.push({...tool, matchType: 'intent'});
                             }
                         });
                     });
@@ -1389,7 +1390,7 @@
             if (matchedTools.length === 0) {
                 Object.values(toolsData).flat().forEach(tool => {
                     if (tool.desc.toLowerCase().includes(lowerQuery)) {
-                        matchedTools.push(tool);
+                        matchedTools.push({...tool, matchType: 'description'});
                     }
                 });
             }
@@ -1447,14 +1448,15 @@
                         <h4 style="margin-bottom: 5px;">${tool.name}</h4>
                         <p style="font-size: 0.9rem; color: var(--text-light);">${tool.desc}</p>
                         <span style="font-size: 0.8rem; color: var(--primary-blue); margin-top: 5px; display: block;">
-                            Click to open tool
+                            ${tool.matchType === 'name' ? '🔍 Name match' : tool.matchType === 'intent' ? '🤖 AI intent match' : '📝 Description match'}
                         </span>
                     </div>
                 `;
                 
                 resultItem.addEventListener('click', function() {
-                    // Navigate directly to the tool
-                    window.location.href = tool.link;
+                    scrollToToolAndHighlight(tool.name);
+                    searchResults.style.display = 'none';
+                    searchInput.value = '';
                 });
                 
                 searchResults.appendChild(resultItem);
@@ -1462,6 +1464,42 @@
             
             // Add keyboard navigation
             addSearchKeyboardNavigation();
+        }
+
+        // Scroll to tool and highlight it
+        function scrollToToolAndHighlight(toolName) {
+            // Find the tool card
+            const toolCards = document.querySelectorAll('.tool-card');
+            let targetCard = null;
+            let targetSection = null;
+            
+            toolCards.forEach(card => {
+                if (card.getAttribute('data-tool-name') === toolName.toLowerCase()) {
+                    targetCard = card;
+                    targetSection = card.closest('.tools-section');
+                }
+            });
+            
+            if (targetCard && targetSection) {
+                // Scroll to the section
+                window.scrollTo({
+                    top: targetSection.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+                
+                // Highlight the card
+                targetCard.classList.add('highlighted');
+                
+                // Remove highlight after 3 seconds
+                setTimeout(() => {
+                    targetCard.classList.remove('highlighted');
+                }, 3000);
+                
+                // Add a message in the chat if it's open
+                if (aiHelperPanel.style.display === 'flex') {
+                    addAIMessage(`I've highlighted the ${toolName} tool for you. Click the "Use Tool" button to access it.`);
+                }
+            }
         }
 
         // Add keyboard navigation for search results
@@ -1520,4 +1558,4 @@
         }
     </script>
 </body>
-    </html>
+                    </html>
